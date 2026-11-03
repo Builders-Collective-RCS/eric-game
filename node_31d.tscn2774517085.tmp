@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://cjpfk2cos82dd"]
+
+[ext_resource type="Script" uid="uid://b5w74gx003cvh" path="res://character_body_3d.gd" id="1_ciyqk"]
+[ext_resource type="Script" uid="uid://cwyh2vwlacumv" path="res://ball.gd" id="2_4p4gg"]
+[ext_resource type="Script" uid="uid://cjp0n0iqstkfx" path="res://camera_3d.gd" id="2_jcal3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i7081"]
+size = Vector3(15, 1, 15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wkx8q"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4p4gg"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jcal3"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_wkx8q"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_i7081"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wkx8q"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_i7081"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wkx8q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wkx8q"]
+
+[node name="Node3D" type="Node3D" unique_id=1878369501]
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=1167566346]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=294695751]
+shape = SubResource("BoxShape3D_i7081")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=580248348]
+transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 0, 0, 0)
+mesh = SubResource("BoxMesh_wkx8q")
+
+[node name="AI" type="CharacterBody3D" parent="." unique_id=555066190 node_paths=PackedStringArray("target") groups=["AI"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3898294, 0)
+script = ExtResource("1_ciyqk")
+target = NodePath("../Ball")
+
+[node name="Camera3D" type="Camera3D" parent="AI" unique_id=1991085485 node_paths=PackedStringArray("ball")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.25, 0.5, 0)
+script = ExtResource("2_jcal3")
+ball = NodePath("../../Ball")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AI" unique_id=1381308311]
+mesh = SubResource("CapsuleMesh_4p4gg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AI" unique_id=876280015]
+shape = SubResource("CapsuleShape3D_jcal3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1382185046]
+transform = Transform3D(1, 0, 0, 0, 1.192488e-08, 0.99999994, 0, -0.99999994, 1.192488e-08, 0, 8.744766, 0)
+
+[node name="Ball" type="StaticBody3D" parent="." unique_id=1909183472]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9228306, 1.008183, 0)
+script = ExtResource("2_4p4gg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball" unique_id=2046152679]
+mesh = SubResource("SphereMesh_wkx8q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball" unique_id=1438841697]
+shape = SubResource("SphereShape3D_i7081")
+
+[node name="Area3D" type="Area3D" parent="Ball" unique_id=525095883]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball/Area3D" unique_id=656560294]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("SphereShape3D_wkx8q")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1973448392]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=552262963]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+mesh = SubResource("CapsuleMesh_i7081")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=590862945]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+shape = SubResource("CapsuleShape3D_wkx8q")
+
+[node name="trap" type="StaticBody3D" parent="." unique_id=256811793]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="trap" unique_id=157366694]
+mesh = SubResource("BoxMesh_wkx8q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="trap" unique_id=862419321]
+shape = SubResource("BoxShape3D_wkx8q")
+
+[connection signal="body_entered" from="Ball/Area3D" to="AI" method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Ball/Area3D" to="Ball" method="_on_area_3d_body_entered"]
