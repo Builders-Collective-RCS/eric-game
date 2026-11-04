@@ -1,1 +1,1 @@
-# eric-game
+# not buggy fr
